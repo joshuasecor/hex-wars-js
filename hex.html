@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hex Wars</title>
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	<script src="js/hex.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/hex.css" />
+</head>
+
+<body>
+
+  <div id="boardAndCards">
+
+    <!-- * CARDS * -->
+
+    <div id="cardContainer">
+
+      <div id="card0" class="card" value="hexagon zero">
+        <div class="hexagon zero">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="card1" class="card" value="hexagon one">
+        <div class="hexagon one">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="card2" class="card" value="hexagon two">
+        <div class="hexagon two">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+      
+    </div>
+
+  <!-- * GAME BOARD * -->
+
+    <div id="board">
+
+      <div id="hex0" class="hexes">
+        <div class="hexagon red" value="0">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex1" class="hexes">
+        <div class="hexagon red" value="1">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex2" class="hexes">
+        <div class="hexagon red" value="2">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex3" class="hexes">
+        <div class="hexagon red" value="3">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex4" class="hexes">
+        <div class="hexagon red" value="4">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex5" class="hexes">
+        <div class="hexagon red" value="5">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+      <div id="hex6" class="hexes">
+        <div class="hexagon red" value="6">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+
+    $(function() {
+      $( ".card" ).draggable({
+        revert: "invalid",
+        snap: true,
+        stack: ".hexes",
+      });
+      $( ".hexagon" ).droppable({
+        drop: function( event, ui ) {
+          var cardName = ui.draggable.attr('value');
+          var hexNum = ($(this).attr('value'));
+          $( this )
+            .removeClass("hexagon red")
+            .addClass(cardName);
+          ui.draggable.remove();
+          playCard(cardName, hexNum);
+        }
+      });
+    });
+
+    $(document).ready(function() {
+      setPlayer();
+    });
+
+  </script>
+
+</body>
+</html>
