@@ -129,22 +129,22 @@ body {
 }
 
 .zero {
-  background-image: url(http://img4.wikia.nocookie.net/__cb20120629122150/assassinscreed/images/8/88/DVD-Knight.png);
-  background-size: 90px;
+  background-image: url("../images/card0.png");
+  background-size: 190px;
   background-color: white;
   background-repeat: no-repeat;
 }
 
 .one {
-  background-image: url(http://oyster.ignimgs.com/mediawiki/apis.ign.com/assassins-creed-3/thumb/3/3d/ACIII-MP-Strongman.png/228px-ACIII-MP-Strongman.png);
-  background-size: 100px;
+  background-image: url("../images/card1.png");
+  background-size: 190px;
   background-color: white;
   background-repeat: no-repeat;
 }
 
 .two {
-  background-image: url(http://psucollegio.com/wp-content/uploads/2012/11/AC3_Connor_Render.png);
-  background-size: 110px;
+  background-image: url("../images/card2.png");
+  background-size: 190px;
   background-color: white;
   background-repeat: no-repeat;
 }
