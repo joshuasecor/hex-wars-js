@@ -21,7 +21,7 @@ var tiles = 3 * (Math.pow(size, 2) - size) + 1;
 var hexes = [];
 for (var i = 0; i < tiles; ++i) {
 	hexes[i] = {
-		values: [0, 0, 0, 0, 0, 0],
+		values: [],
 		owner: 0,
 		position: []
 	};
@@ -86,6 +86,14 @@ function nextTurn() {
 
 // Set values of board hex to values of card that was played //
 function playCard(cardName, hexNum) {
+	if (turn %2 == 0) {
+		hexes[hexNum].owner = 1;
+		colorSwapBlue(hexNum);
+	} else {
+		hexes[hexNum].owner = -1;
+		colorSwapRed(hexNum);
+	};
+
 	if (cardName == "hexagon zero") {
 		hexes[hexNum].values = cards[0]
 	} else if (cardName == "hexagon one") {
@@ -93,24 +101,34 @@ function playCard(cardName, hexNum) {
 	} else if (cardName == "hexagon two") {
 		hexes[hexNum].values = cards[2]
 	}
-	compareCard(hexNum);
+	findCard(hexNum);
 };
 
 
-// Compare played card to adjacent cards //
-function compareCard(hexNum) {
+// Find cards adjacent to played card //
+function findCard(hexNum) {
 	rowX = hexes[hexNum].position[0];
 	colY = hexes[hexNum].position[1];
 
 	for (var i = 0; i < tiles; ++i) {
-		if (hexes[i].position = [rowX-1, colY]) {
-			var dif = hexes[i].values[2] - hexes[hexNum].values[5];
-			if (dif < 0) {
-				steal(i);
-			} else if (dif = 0) {
-				neutralize(i);
+		if (hexes[i].values != []){
+			if (hexes[i].position = [rowX-1, colY]) {
+				dif = hexes[i].values[2] - hexes[hexNum].values[5];
+				compareCard(dif, i);
+			// } else if (hexes[i].position = [rowX-1, colY+1]) {
+			// 	dif = hexes[i]
 			}
 		}
+	}
+};
+
+
+// Compare adjacent card to played card //
+function compareCard(dif, i) {
+	if (dif < 0) {
+		steal(i);
+	} else if (dif = 0) {
+		neutralize(i);
 	}
 };
 
@@ -119,9 +137,21 @@ function compareCard(hexNum) {
 function steal(i) {
 	if (turn %2 == 0) {
 		hexes[i].owner = 1;
+		colorSwapBlue(i);
 	} else {
 		hexes[i].owner = -1;
+		colorSwapRed(i);
 	}
+};
+
+
+// Change color based on hex ownership //
+function colorSwapBlue(i) {
+	document.getElementById("hexy" + i).style.backgroundColor = "blue";
+};
+
+function colorSwapRed(i) {
+	document.getElementById("hexy" + i).style.backgroundColor = "red";
 };
 
 

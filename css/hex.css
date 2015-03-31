@@ -124,23 +124,29 @@ body {
   transition: color 500ms ease, text-shadow 500ms ease;
 }
 
-.red {
-  background-color: #700000;
+.white {
+  background-color: white;
 }
 
 .zero {
-  background-image: url(http://static.giantbomb.com/uploads/original/0/5911/951077-ezio.png);
-  background-size: 200px;
+  background-image: url(http://img4.wikia.nocookie.net/__cb20120629122150/assassinscreed/images/8/88/DVD-Knight.png);
+  background-size: 90px;
+  background-color: white;
+  background-repeat: no-repeat;
 }
 
 .one {
-  background-image: url(http://www.gamechup.com/wp-content/uploads/2013/03/assassins-creed-4-3.jpg);
-  background-size: 180px;
+  background-image: url(http://oyster.ignimgs.com/mediawiki/apis.ign.com/assassins-creed-3/thumb/3/3d/ACIII-MP-Strongman.png/228px-ACIII-MP-Strongman.png);
+  background-size: 100px;
+  background-color: white;
+  background-repeat: no-repeat;
 }
 
 .two {
-  background-image: url(http://images5.fanpop.com/image/photos/30600000/Assassin-s-creed-Main-assassin-characters-assassins-creed-assassin-or-templar-30666139-724-1024.jpg);
-  background-size: 160px;
+  background-image: url(http://psucollegio.com/wp-content/uploads/2012/11/AC3_Connor_Render.png);
+  background-size: 110px;
+  background-color: white;
+  background-repeat: no-repeat;
 }
 
 .hexagon:hover {
