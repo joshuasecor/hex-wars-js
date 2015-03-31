@@ -6,6 +6,7 @@
 	<script src="js/hex.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-ui.js"></script>
+  <script src="http://underscorejs.org/underscore-min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/hex.css" />
 </head>
 
@@ -114,14 +115,15 @@
             .addClass(cardName);
           ui.draggable.remove();
           playCard(cardName, hexNum);
+          findCard(hexNum);
           nextTurn();
         }
       });
     });
 
-    $(document).ready(function() {
-      setPlayer();
-    });
+    // $(document).ready(function() {
+    //   setPlayer();
+    // });
 
   </script>
 

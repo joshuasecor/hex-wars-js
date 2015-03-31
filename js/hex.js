@@ -62,17 +62,17 @@ var cards = [
 
 
 // Set turn counter (undefined until first player arrives) and player id's //
-var turn;
+var turn = 1;
 
-function setPlayer() {
-	if (turn === undefined) {
-		playerId = 1;
-		turn = -1;
-	} else {
-		playerId = 2;
-		turn++;
-	}
-};
+// function setPlayer() {
+// 	if (turn === undefined) {
+// 		playerId = 1;
+// 		turn = -1;
+// 	} else {
+// 		playerId = 2;
+// 		turn++;
+// 	}
+// };
 
 
 // Increment turn counter //
@@ -89,7 +89,7 @@ function playCard(cardName, hexNum) {
 	if (turn %2 == 0) {
 		hexes[hexNum].owner = 1;
 		colorSwapBlue(hexNum);
-	} else {
+	} else if (turn %2 != 0) {
 		hexes[hexNum].owner = -1;
 		colorSwapRed(hexNum);
 	};
@@ -100,26 +100,37 @@ function playCard(cardName, hexNum) {
 		hexes[hexNum].values = cards[1]
 	} else if (cardName == "hexagon two") {
 		hexes[hexNum].values = cards[2]
-	}
-	findCard(hexNum);
+	};
 };
 
 
 // Find cards adjacent to played card //
 function findCard(hexNum) {
-	rowX = hexes[hexNum].position[0];
-	colY = hexes[hexNum].position[1];
-
+	var rowX = hexes[hexNum].position[0];
+	var colY = hexes[hexNum].position[1];
 	for (var i = 0; i < tiles; ++i) {
 		if (hexes[i].values != []){
-			if (hexes[i].position = [rowX-1, colY]) {
-				dif = hexes[i].values[2] - hexes[hexNum].values[5];
+			if (_.isEqual(hexes[i].position, [(rowX-1), colY])) {
+				dif = (hexes[i].values[2] - hexes[hexNum].values[5]);
 				compareCard(dif, i);
-			// } else if (hexes[i].position = [rowX-1, colY+1]) {
-			// 	dif = hexes[i]
+			} else if (_.isEqual(hexes[i].position, [rowX-1, colY+1])) {
+				dif = hexes[i].values[3] - hexes[hexNum].values[0];
+				compareCard(dif, i);
+			} else if (_.isEqual(hexes[i].position, [rowX, colY-1])) {
+				dif = hexes[i].values[1] - hexes[hexNum].values[4];
+				compareCard(dif, i);
+			} else if (_.isEqual(hexes[i].position, [rowX, colY+1])) {
+				dif = hexes[i].values[4] - hexes[hexNum].values[1];
+				compareCard(dif, i);
+			} else if (_.isEqual(hexes[i].position, [rowX+1, colY-1])) {
+				dif = hexes[i].values[0] - hexes[hexNum].values[3];
+				compareCard(dif, i);
+			} else if (_.isEqual(hexes[i].position, [rowX+1, colY])) {
+				dif = hexes[i].values[5] - hexes[hexNum].values[2];
+				compareCard(dif, i);
 			}
-		}
-	}
+		};
+	};
 };
 
 
@@ -127,7 +138,7 @@ function findCard(hexNum) {
 function compareCard(dif, i) {
 	if (dif < 0) {
 		steal(i);
-	} else if (dif = 0) {
+	} else if (dif == 0) {
 		neutralize(i);
 	}
 };
@@ -138,10 +149,17 @@ function steal(i) {
 	if (turn %2 == 0) {
 		hexes[i].owner = 1;
 		colorSwapBlue(i);
-	} else {
+	} else if (turn %2 != 0) {
 		hexes[i].owner = -1;
 		colorSwapRed(i);
 	}
+};
+
+
+// When a hex is made neutral //
+function neutralize(i) {
+	hexes[i].owner = 0;
+	colorSwapWhite(i);
 };
 
 
@@ -154,10 +172,8 @@ function colorSwapRed(i) {
 	document.getElementById("hexy" + i).style.backgroundColor = "red";
 };
 
-
-// When a hex is made neutral //
-function neutralize(i) {
-	hexes[i].owner = 0;
+function colorSwapWhite(i) {
+	document.getElementById("hexy" + i).style.backgroundColor = "white";
 };
 
 
