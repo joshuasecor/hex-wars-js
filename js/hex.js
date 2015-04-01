@@ -4,11 +4,6 @@
 // rootRef.child('gameTitle');
 
 
-(function() {
-  $( "#draggable" ).draggable();
-});
-
-
 // This is chosen by user as "game board size" //
 var size = 2;
 
@@ -158,22 +153,28 @@ function steal(i) {
 
 // When a hex is made neutral //
 function neutralize(i) {
-	hexes[i].owner = 0;
-	colorSwapWhite(i);
+	if (turn %2 == 0 && hexes[i].owner == -1) {
+		hexes[i].owner = 0;
+		colorSwapWhite(i);
+	};
+	if (turn %2 != 0 && hexes[i].owner == 1) {
+		hexes[i].owner = 0;
+		colorSwapWhite(i);
+	};
 };
 
 
 // Change color based on hex ownership //
 function colorSwapBlue(i) {
-	document.getElementById("hexy" + i).style.backgroundColor = "blue";
+	document.getElementById("hexy" + i).style.backgroundColor = "#4169E1";
 };
 
 function colorSwapRed(i) {
-	document.getElementById("hexy" + i).style.backgroundColor = "red";
+	document.getElementById("hexy" + i).style.backgroundColor = "#DC143C";
 };
 
 function colorSwapWhite(i) {
-	document.getElementById("hexy" + i).style.backgroundColor = "white";
+	document.getElementById("hexy" + i).style.backgroundColor = "#FFF8DC";
 };
 
 

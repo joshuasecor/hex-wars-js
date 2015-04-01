@@ -1,12 +1,15 @@
 
 body {
-  background-color: #262626;
+  /*background-color: #262626;*/
+  background-image: url(../images/background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 /* BOARD AND CARDS */
 
 #boardAndCards {
-  width: 1005px;
+  width: 1050px;
   margin: 0 auto;
 }
 
@@ -15,11 +18,11 @@ body {
 #board {
   float: left;
   margin: 0 auto;
-  margin-top: 55px;
+  margin-top: 15px;
   width: 700px;
   height: 655px;
-  border: solid gray 3px;
-  border-radius: 10px;
+/*  border: solid gray 3px;
+  border-radius: 10px;*/
 }
 
 /* BOARD HEXES */
@@ -71,29 +74,35 @@ body {
 #cardContainer {
   float: left;
   margin: 0 auto;
+  margin-top: 15px;
   margin-right: 10px;
-  margin-left: 0px;
-  width: 255px;
+  margin-left: 85px;
+  width: 245px;
   height: 655px;
-  /*border: solid gray 3px;*/
-  /*border-radius: 10px;*/
+/*  border: solid gray 3px;
+  border-radius: 10px;*/
+}
+
+#card0 {
+  position: relative;
+  left: 0px;
+  top: 0px;
 }
 
 #card1 {
-
+  position: relative;
+  left: -100px;
+  top: -55px;
 }
 
 #card2 {
-
+  position: relative;
+  left: 0px;
+  top: -110px;
 }
 
 .card {
   margin-bottom: 120px;
-}
-
-.cardsColor {
-  background-color: #007070;
-  background-position: center center;
 }
 
 
@@ -125,27 +134,27 @@ body {
 }
 
 .white {
-  background-color: white;
+  background-color: #FFF8DC;
 }
 
 .zero {
   background-image: url("../images/card0.png");
   background-size: 190px;
-  background-color: white;
+  background-color: #ededed;
   background-repeat: no-repeat;
 }
 
 .one {
   background-image: url("../images/card1.png");
   background-size: 190px;
-  background-color: white;
+  background-color: #ededed;
   background-repeat: no-repeat;
 }
 
 .two {
   background-image: url("../images/card2.png");
   background-size: 190px;
-  background-color: white;
+  background-color: #ededed;
   background-repeat: no-repeat;
 }
 

@@ -100,9 +100,10 @@
 
   <script type="text/javascript">
 
+    // Drap and drop functionality and game logic trigger //
     $(function() {
       $( ".card" ).draggable({
-        revert: "invalid",
+        revert: true,
         snap: true,
         stack: ".hexes",
       });
@@ -111,9 +112,10 @@
           var cardName = ui.draggable.attr('data-value');
           var hexNum = ($(this).attr('data-value'));
           $( this )
-            .removeClass("hexagon white")
-            .addClass(cardName);
-          ui.draggable.remove();
+            .removeClass( 'hexagon white' )
+            .addClass(cardName)
+            .droppable( 'disable' );;
+          ui.draggable.attr( 'onClick', 'return false' );;
           playCard(cardName, hexNum);
           findCard(hexNum);
           nextTurn();
