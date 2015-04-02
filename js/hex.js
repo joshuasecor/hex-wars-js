@@ -1,6 +1,6 @@
 
 // Reference Firebase //
-var ref = new Firebase("https://hex-wars.firebaseio.com/");
+var gameRef = new Firebase("https://hex-wars.firebaseio.com/");
 
 
 // This is chosen by user as "game board size" //
@@ -16,7 +16,7 @@ var hexes = [];
 
 for (var i = 0; i < tiles; ++i) {
 	hexes[i] = {
-		values: [0, 0, 0, 0, 0, 0],
+		values: [-1, -1, -1, -1, -1, -1],
 		owner: 0,
 		position: []
 	};
@@ -56,17 +56,16 @@ var cards = [
 ];
 
 
-// Set turn counter (undefined until first player arrives) and player id's //
-var turn = 1;
-var player = 1;
+// Set turn counter //
+var turn = 0;
 
 
 // ref.on("value", function(snapshot) {
 // 	if (snapshot.val() === null) {
-// 		ref.set({
-// 			hexes: hexes,
-// 			turn: 1
-// 		})
+		// gameRef.set({
+		// 	hexes: hexes,
+		// 	turn: 1
+		// })
 // 	} else {
 // 		player =
 // }); 2;
@@ -80,10 +79,15 @@ function nextTurn() {
 	if (turn == tiles) {
 		winLogic();
 	};
-	ref.update({
+  gameRef.child('turn').update({
 		turn: turn
 	});
 };
+
+gameRef.child('turn').on('value', function(snapshot) {
+  var change = snapshot.val();
+  turn = change.turn;
+});
 
 
 // Set values of board hex to values of card that was played //
@@ -103,10 +107,16 @@ function playCard(cardName, hexNum) {
 	} else if (cardName == "hexagon two") {
 		hexes[hexNum].values = cards[2]
 	};
-	ref.update({
+	gameRef.child('hex_data').update({
 		hexes: hexes
-	})
+	});
 };
+
+gameRef.child('hex_data').on('value', function(snapshot) {
+  var change = snapshot.val();
+  console.log(change.hexes);
+  hexes = change.hexes;
+});
 
 
 // Find cards adjacent to played card //
@@ -114,7 +124,7 @@ function findCard(hexNum) {
 	var rowX = hexes[hexNum].position[0];
 	var colY = hexes[hexNum].position[1];
 	for (var i = 0; i < tiles; ++i) {
-		if (hexes[i].values != []){
+		if (hexes[i].values[0] > 0){
 			if (_.isEqual(hexes[i].position, [(rowX-1), colY])) {
 				dif = (hexes[i].values[2] - hexes[hexNum].values[5]);
 				compareCard(dif, i);
@@ -214,19 +224,19 @@ function winLogic() {
 // Define logic for various game outcomes //
 function oneWins() {
 
-}
+};
 
 function twoWins() {
 
-}
+};
 
 function tieGame() {
 
-}
+};
 
+var playerId;
 
-
-
+var username;
 
 
 // ** Player assignment ** via https://gist.github.com/anantn/4323981 //
@@ -234,7 +244,6 @@ function tieGame() {
 function go() {
   var userId = prompt('Username?', 'Guest');
   // Consider adding '/<unique id>' if you have multiple games.
-  var gameRef = new Firebase(GAME_LOCATION);
   assignPlayerNumberAndPlayGame(userId, gameRef);
 };
  
@@ -262,15 +271,21 @@ function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
  
   if (justJoinedGame) {
     alert('Doing first-time initialization of data.');
-    playerDataRef.set({userId: userId, state: 'game state'});
+    playerDataRef.push({userId: userId, state: 'game state'});
+    gameRef.child('hex_data').update({
+			hexes: hexes
+		});
+		gameRef.child('turn').update({
+			turn: 0
+		});
   }
-}
+};
  
 // Use transaction() to assign a player number, then call playGame().
 function assignPlayerNumberAndPlayGame(userId, gameRef) {
   var playerListRef = gameRef.child(PLAYERS_LOCATION);
   var myPlayerNumber, alreadyInGame = false;
- 
+
   playerListRef.transaction(function(playerList) {
     // Attempt to (re)join the given game. Notes:
     //
@@ -299,6 +314,8 @@ function assignPlayerNumberAndPlayGame(userId, gameRef) {
       // Empty seat is available so grab it and attempt to commit modified playerList.
       playerList[i] = userId;  // Reserve our seat.
       myPlayerNumber = i; // Tell completion callback which seat we reserved.
+      playerId = myPlayerNumber;
+      username = userId;
       return playerList;
     }
  
@@ -313,7 +330,7 @@ function assignPlayerNumberAndPlayGame(userId, gameRef) {
       alert('Game is full.  Can\'t join. :-(');
     }
   });
-}
+};
 
 
 

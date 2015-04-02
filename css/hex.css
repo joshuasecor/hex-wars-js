@@ -98,21 +98,21 @@ body {
 }
 
 #card0 {
-  position: relative;
+  position: absolute;
   left: 0px;
-  top: 0px;
+  top: 350px;
 }
 
 #card1 {
-  position: relative;
-  left: -100px;
-  top: -55px;
+  position: absolute;
+  left: 100px;
+  top: 175px;
 }
 
 #card2 {
-  position: relative;
-  left: 0px;
-  top: -110px;
+  position: absolute;
+  left: 200px;
+  top: 350px;
 }
 
 .card {
@@ -212,5 +212,4 @@ body {
   transform-origin: right top;
   transform: rotate(60deg) translate(110px, 0);
 }
-
 

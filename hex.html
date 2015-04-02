@@ -14,7 +14,7 @@
 <body>
 
   <div id="button" class="animated fadeIn">
-    <button type="button" onclick="setPlayer()">click to play</button>
+    <button type="button">click to play</button>
   </div>
 
   <div id="boardAndCards">
@@ -23,24 +23,30 @@
 
     <div id="cardContainer">
 
-      <div id="card0" class="card" data-value="hexagon zero">
-        <div class="hexagon zero">
-          <div class="face1"></div>
-          <div class="face2"></div>
+      <div id="card0">
+        <div class="card" data-value="hexagon zero">
+          <div class="hexagon zero">
+            <div class="face1"></div>
+            <div class="face2"></div>
+          </div>
         </div>
       </div>
 
-      <div id="card1" class="card" data-value="hexagon one">
-        <div class="hexagon one">
-          <div class="face1"></div>
-          <div class="face2"></div>
+      <div id="card1">
+        <div class="card" data-value="hexagon one">
+          <div class="hexagon one">
+            <div class="face1"></div>
+            <div class="face2"></div>
+          </div>
         </div>
       </div>
 
-      <div id="card2" class="card" data-value="hexagon two">
-        <div class="hexagon two">
-          <div class="face1"></div>
-          <div class="face2"></div>
+      <div id="card2">
+        <div class="card" data-value="hexagon two">
+          <div class="hexagon two">
+            <div class="face1"></div>
+            <div class="face2"></div>
+          </div>
         </div>
       </div>
       
@@ -107,12 +113,12 @@
 
     // Drap and drop functionality and game logic trigger //
     $(function() {
-      $( ".card" ).draggable({
+      $( '.card' ).draggable({
         revert: true,
         snap: true,
-        stack: ".hexes",
+        stack: '.card'
       });
-      $( ".hexagon" ).droppable({
+      $( '.hexagon' ).droppable({
         drop: function( event, ui ) {
           var cardName = ui.draggable.attr('data-value');
           var hexNum = ($(this).attr('data-value'));
@@ -120,7 +126,7 @@
             .removeClass( 'hexagon white' )
             .addClass(cardName)
             .droppable( 'disable' );
-          ui.draggable.attr( 'onClick', 'return false' );;
+          ui.draggable.remove();
           playCard(cardName, hexNum);
           findCard(hexNum);
           nextTurn();
