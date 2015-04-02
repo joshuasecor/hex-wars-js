@@ -8,9 +8,14 @@
   <script src="js/jquery-ui.js"></script>
   <script src="http://underscorejs.org/underscore-min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/hex.css" />
+  <link rel="stylesheet" type="text/css" href="css/animate.css" />
 </head>
 
 <body>
+
+  <div id="button" class="animated fadeIn">
+    <button type="button" onclick="setPlayer()">click to play</button>
+  </div>
 
   <div id="boardAndCards">
 
@@ -114,18 +119,21 @@
           $( this )
             .removeClass( 'hexagon white' )
             .addClass(cardName)
-            .droppable( 'disable' );;
+            .droppable( 'disable' );
           ui.draggable.attr( 'onClick', 'return false' );;
           playCard(cardName, hexNum);
           findCard(hexNum);
           nextTurn();
         }
       });
+      $( 'button' ).button();
+      $('button').click(function() {
+        go();
+        $('#boardAndCards').css('visibility', 'visible');
+        $('#boardAndCards').addClass('animated zoomIn');
+        $( this ).button( "disable" );
+      });
     });
-
-    // $(document).ready(function() {
-    //   setPlayer();
-    // });
 
   </script>
 

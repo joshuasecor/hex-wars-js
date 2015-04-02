@@ -6,11 +6,31 @@ body {
   background-attachment: fixed;
 }
 
+#button {
+  text-align: center;
+  margin-top: 45px;
+  outline: none;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 0.5s;
+}
+
+#button button{
+  font-size: 24px;
+  background-color: #ecef3e;
+  border-radius: 15px;
+  font-style: helvetica;
+}
+
+#button button:focus{
+  outline: none;
+}
+
 /* BOARD AND CARDS */
 
 #boardAndCards {
   width: 1050px;
   margin: 0 auto;
+  visibility: hidden;
 }
 
 /* GAME BOARD */
@@ -18,11 +38,8 @@ body {
 #board {
   float: left;
   margin: 0 auto;
-  margin-top: 15px;
   width: 700px;
   height: 655px;
-/*  border: solid gray 3px;
-  border-radius: 10px;*/
 }
 
 /* BOARD HEXES */
@@ -74,13 +91,10 @@ body {
 #cardContainer {
   float: left;
   margin: 0 auto;
-  margin-top: 15px;
   margin-right: 10px;
   margin-left: 85px;
   width: 245px;
   height: 655px;
-/*  border: solid gray 3px;
-  border-radius: 10px;*/
 }
 
 #card0 {
