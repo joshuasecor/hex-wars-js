@@ -116,6 +116,33 @@ gameRef.child('hex_data').on('value', function(snapshot) {
   var change = snapshot.val();
   console.log(change.hexes);
   hexes = change.hexes;
+  for (var i = 0; i < tiles; ++i) {
+  	if (hexes[i].owner == 1) {
+			colorSwapBlue(i);
+		} else if (hexes[i].owner == -1) {
+			colorSwapRed(i);
+		} else if (hexes[i].owner == 0) {
+			colorSwapWhite(i);
+		};
+  };
+  for (var i = 0; i < tiles; ++i) {
+  	if (_.isEqual(hexes[i].values, cards[0])) {
+	    $( "#hexy" + i )
+	      .removeClass( 'hexagon white' )
+	      .addClass( 'hexagon zero' )
+	      .droppable( 'disable' )
+  	} else if (_.isEqual(hexes[i].values, cards[1])) {
+	    $( "#hexy" + i )
+	      .removeClass( 'hexagon white' )
+	      .addClass( 'hexagon one' )
+	      .droppable( 'disable' )
+	  } else if (_.isEqual(hexes[i].values, cards[2])) {
+	    $( "#hexy" + i )
+	      .removeClass( 'hexagon white' )
+	      .addClass( 'hexagon one' )
+	      .droppable( 'disable' )
+	    }
+  };
 });
 
 
@@ -185,6 +212,8 @@ function neutralize(i) {
 
 
 // Change color based on hex ownership //
+
+
 function colorSwapBlue(i) {
 	document.getElementById("hexy" + i).style.backgroundColor = "#4169E1";
 };
