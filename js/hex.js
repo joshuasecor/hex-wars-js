@@ -76,6 +76,14 @@ var turn = 0;
 // Increment turn counter //
 function nextTurn() {
 	turn++;
+	if (turn == (tiles - 1)) {
+		for (var i = 0; i < 6; i++) {
+  		joker[i] = Math.floor((Math.random() * 9))
+		};
+	gameRef.child('joker').update({
+		joker: joker
+	});
+	};
 	if (turn == tiles) {
 		winLogic();
 	};
@@ -114,7 +122,6 @@ function playCard(cardName, hexNum) {
 
 gameRef.child('hex_data').on('value', function(snapshot) {
   var change = snapshot.val();
-  console.log(change.hexes);
   hexes = change.hexes;
   for (var i = 0; i < tiles; ++i) {
   	if (hexes[i].owner == 1) {
@@ -139,7 +146,7 @@ gameRef.child('hex_data').on('value', function(snapshot) {
 	  } else if (_.isEqual(hexes[i].values, cards[2])) {
 	    $( "#hexy" + i )
 	      .removeClass( 'hexagon white' )
-	      .addClass( 'hexagon one' )
+	      .addClass( 'hexagon two' )
 	      .droppable( 'disable' )
 	    }
   };
@@ -195,6 +202,9 @@ function steal(i) {
 		hexes[i].owner = -1;
 		colorSwapRed(i);
 	}
+	gameRef.child('hex_data').update({
+		hexes: hexes
+	});
 };
 
 
@@ -208,6 +218,9 @@ function neutralize(i) {
 		hexes[i].owner = 0;
 		colorSwapWhite(i);
 	};
+	gameRef.child('hex_data').update({
+		hexes: hexes
+	});
 };
 
 
