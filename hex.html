@@ -13,8 +13,12 @@
 
 <body>
 
-  <div id="button" class="animated fadeIn">
-    <button type="button">click to play</button>
+  <div id="title" class="animated fadeIn">
+    <p>&nbsp;&nbsp;Hex Wars</p>
+  </div>
+
+  <div id="button" class="animated zoomIn">
+    <button type="button">START</button>
   </div>
 
   <div id="boardAndCards">
@@ -133,11 +137,12 @@
         }
       });
       $( 'button' ).button();
-      $('button').click(function() {
+      $( 'button' ).click(function() {
+        $( '#button' ).remove();
+        $( '#title' ).remove();
         go();
         $('#boardAndCards').css('visibility', 'visible');
         $('#boardAndCards').addClass('animated zoomIn');
-        $( this ).button( "disable" );
       });
     });
 

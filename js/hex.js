@@ -77,13 +77,11 @@ var turn = 0;
 function nextTurn() {
 	turn++;
 	if (turn == (tiles - 1)) {
-		for (var i = 0; i < 6; i++) {
-  		joker[i] = Math.floor((Math.random() * 9))
-		};
+  	// joker in last tile
+	};
 	gameRef.child('joker').update({
 		joker: joker
 	});
-	};
 	if (turn == tiles) {
 		winLogic();
 	};
@@ -284,7 +282,7 @@ var username;
 // ** Player assignment ** via https://gist.github.com/anantn/4323981 //
 
 function go() {
-  var userId = prompt('Username?', 'Guest');
+  var userId = prompt('Enter your username:');
   // Consider adding '/<unique id>' if you have multiple games.
   assignPlayerNumberAndPlayGame(userId, gameRef);
 };
@@ -308,8 +306,7 @@ var PLAYER_DATA_LOCATION = 'player_data';
 // Called after player assignment completes.
 function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
   var playerDataRef = gameRef.child(PLAYER_DATA_LOCATION).child(myPlayerNumber);
-  alert('You are player number ' + myPlayerNumber + 
-      '.  Your data will be located at ' + playerDataRef.toString());
+  alert('You are player number ' + myPlayerNumber);
  
   if (justJoinedGame) {
     alert('Doing first-time initialization of data.');
