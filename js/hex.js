@@ -55,23 +55,10 @@ var cards = [
 	[1, 5, 3, 1, 5, 3]
 ];
 
-var joker = [0, 6, 0, 6, 0, 6];
+var joker = [0, 3, 0, 3, 0, 3];
 
 // Set turn counter //
 var turn = 0;
-
-
-// ref.on("value", function(snapshot) {
-// 	if (snapshot.val() === null) {
-		// gameRef.set({
-		// 	hexes: hexes,
-		// 	turn: 1
-		// })
-// 	} else {
-// 		player =
-// }); 2;
-// 	}
-
 
 
 // Increment turn counter //
@@ -79,9 +66,6 @@ function nextTurn() {
 	turn++;
 	if (turn == (tiles - 1)) {
 		playJoker();
-	};
-	if (turn == tiles) {
-		winLogic();
 	};
   gameRef.child('turn').update({
 		turn: turn
@@ -91,6 +75,9 @@ function nextTurn() {
 gameRef.child('turn').on('value', function(snapshot) {
   var change = snapshot.val();
   turn = change.turn;
+  if (turn == tiles) {
+		winLogic();
+	};
 	disablePlayer();
 });
 
@@ -99,6 +86,7 @@ function playJoker() {
 	for (var i = 0; i < tiles; ++i) {
 		if (hexes[i].values[0] < 0) {
 			hexes[i].values = joker;
+			findCard(i);
 	    $( "#hexy" + i )
 	      .removeClass( 'hexagon white' )
 	      .addClass( 'hexagon joker animated zoomIn' )
@@ -109,6 +97,7 @@ function playJoker() {
 	gameRef.child('hex_data').update({
 		hexes: hexes
 	});
+	nextTurn();
 };
 
 
@@ -226,22 +215,32 @@ function compareCard(dif, i) {
 		steal(i);
 	} else if (dif == 0) {
 		neutralize(i);
-	}
+	};
 };
 
 
 // When a hex is claimed by a player //
 function steal(i) {
-	if (turn %2 == 0) {
-		hexes[i].owner = 1;
-		colorSwapBlue(i);
-	} else if (turn %2 != 0) {
-		hexes[i].owner = -1;
-		colorSwapRed(i);
-	}
+	if (turn != tiles - 1) {
+		if (turn %2 == 0) {
+			hexes[i].owner = 1;
+			colorSwapBlue(i);
+		} else if (turn %2 != 0) {
+			hexes[i].owner = -1;
+			colorSwapRed(i);
+		}
+	} else {
+		jokerize(i);
+	};
 	gameRef.child('hex_data').update({
 		hexes: hexes
 	});
+};
+
+
+function jokerize(i) {
+	hexes[i].owner = 0;
+	colorSwapWhite(i);
 };
 
 
@@ -290,32 +289,35 @@ function hexSum() {
 
 // Run win logic after all hexes have been filled - negative vs. positive //
 function winLogic() {
+	hexSum();
 	if (score > 0) {
 		oneWins();
 	} else if (score < 0) {
 		twoWins();
 	} else {
 		tieGame();
-	}
+	};
 };
 
 
 // Define logic for various game outcomes //
 function oneWins() {
-
+	alert("Player 0 Wins")
 };
 
 function twoWins() {
-
+	alert("Player 1 Wins")
 };
 
 function tieGame() {
-
+	alert("Tie Game")
 };
 
 var playerId;
 
 var username;
+
+var listPlayers;
 
 
 // ** Player assignment ** via https://gist.github.com/anantn/4323981 //

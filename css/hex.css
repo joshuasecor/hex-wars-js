@@ -130,7 +130,7 @@ body {
 #card0 {
   position: absolute;
   left: 0px;
-  top: 350px;
+  top: 0px;
 }
 
 #card1 {
@@ -141,7 +141,7 @@ body {
 
 #card2 {
   position: absolute;
-  left: 200px;
+  left: 0px;
   top: 350px;
 }
 
