@@ -55,6 +55,7 @@ var cards = [
 	[1, 5, 3, 1, 5, 3]
 ];
 
+var joker = [0, 6, 0, 6, 0, 6];
 
 // Set turn counter //
 var turn = 0;
@@ -77,11 +78,8 @@ var turn = 0;
 function nextTurn() {
 	turn++;
 	if (turn == (tiles - 1)) {
-  	// joker in last tile
+		playJoker();
 	};
-	gameRef.child('joker').update({
-		joker: joker
-	});
 	if (turn == tiles) {
 		winLogic();
 	};
@@ -93,7 +91,43 @@ function nextTurn() {
 gameRef.child('turn').on('value', function(snapshot) {
   var change = snapshot.val();
   turn = change.turn;
+	disablePlayer();
 });
+
+
+function playJoker() {
+	for (var i = 0; i < tiles; ++i) {
+		if (hexes[i].values[0] < 0) {
+			hexes[i].values = joker;
+	    $( "#hexy" + i )
+	      .removeClass( 'hexagon white' )
+	      .addClass( 'hexagon joker animated zoomIn' )
+	      .css('-webkit-animation-duration', '4s')
+	      .droppable( 'disable' )
+		};
+	};
+	gameRef.child('hex_data').update({
+		hexes: hexes
+	});
+};
+
+
+function disablePlayer() {
+	if (turn %2 == 0) {
+		if (playerId == 0) {
+			$( '.card' ).draggable( "option", "disabled", false );
+		} else if (playerId == 1) {
+			$( '.card' ).draggable( "option", "disabled", true );
+		};
+	};
+	if (turn %2 != 0) {
+		if (playerId == 0) {
+			$( '.card' ).draggable( "option", "disabled", true );
+		} else if (playerId == 1) {
+			$( '.card' ).draggable( "option", "disabled", false );
+		};
+	};
+};
 
 
 // Set values of board hex to values of card that was played //
@@ -145,6 +179,11 @@ gameRef.child('hex_data').on('value', function(snapshot) {
 	    $( "#hexy" + i )
 	      .removeClass( 'hexagon white' )
 	      .addClass( 'hexagon two' )
+	      .droppable( 'disable' )
+	    } else if (_.isEqual(hexes[i].values, joker)) {
+	    $( "#hexy" + i )
+	      .removeClass( 'hexagon white' )
+	      .addClass( 'hexagon joker animated zoomIn' )
 	      .droppable( 'disable' )
 	    }
   };
@@ -355,6 +394,7 @@ function assignPlayerNumberAndPlayGame(userId, gameRef) {
       myPlayerNumber = i; // Tell completion callback which seat we reserved.
       playerId = myPlayerNumber;
       username = userId;
+      disablePlayer();
       return playerList;
     }
  
